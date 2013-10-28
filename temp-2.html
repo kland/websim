@@ -1,0 +1,33 @@
+<html>
+<head>
+<script src="http://simjs.com/_downloads/sim-0.26.js"></script>
+</head>
+
+<body>
+<script>
+var stream = new Random(12345);
+var SIMTIME=1000;
+document.writeln("Start script...");
+var Person = { 
+ start: function () { 
+     var age = stream.exponential(1/70);
+     this.send("death", age, this); 
+     ages.record(age);
+   }, 
+   onMessage: function (sender, message) { 
+    //sim.log("death");
+    } 
+  }; 
+var ages = new Sim.DataSeries("Ages"); 
+for (i=0; i<100000;i++) {
+ var sim = new Sim(); 
+ var person = sim.addEntity(Person); 
+ //sim.setLogger(function (str) { document.write(str); });
+ sim.simulate(SIMTIME);
+}
+document.writeln(ages.average());
+document.writeln("Finished script.");
+</script>
+ 
+ </body>
+ </html>
